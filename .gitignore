@@ -3,3 +3,4 @@ RELEASE-VERSION
 MANIFEST
 .sconsign.dblite
 .ropeproject
+*.egg-info

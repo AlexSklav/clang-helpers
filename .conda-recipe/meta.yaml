@@ -3,58 +3,54 @@
 {% else %}
 {% set GIT_VERSION = GIT_DESCRIBE_TAG[1:] %}
 {% endif %}
-# source will be downloaded prior to filling in jinja templates
-# Example assumes that this folder has setup.py in it
-source:
-  git_url: ../
-
+{% set PKG_NAME = 'clang-helpers' %}
+{% set MODULE_NAME = PKG_NAME.replace('-', '_') %}
 package:
-  name: clang-helpers
-  #: .. versionchanged:: 0.6
+  name: {{ PKG_NAME }}
   version: {{ GIT_VERSION }}
 
 build:
   # If this is a new build for the same version, increment the build
   # number. If you do not include this key, it defaults to 0.
   number: 0
-  #: .. versionadded:: 0.6
   noarch: python
-  #: .. versionadded:: 0.6
-  #: .. versionchanged:: 0.6.1
   script: python setup.py install --single-version-externally-managed --record record.txt
 
 requirements:
   build:
-    #: .. versionadded:: 0.6.2
+    - python >=3.8
+    - numpy
     - pandas
-    #: .. versionadded:: 0.6.2
-    - python-clang >=5.0.0
-    - future
-    - path_helpers >=0.7
     - pydash
-    - python
-    #: .. versionadded:: 0.6.2
-    - six
+    - clang
+    - libclang
+    - python-clang
+    - path-helpers
+
 
   run:
-    #: .. versionadded:: 0.6.2
+    - python >=3.8
+    - numpy
     - pandas
-    - python
-    #: .. versionadded:: 0.6.2
-    - python-clang >=5.0.0
-    - path_helpers >=0.7
     - pydash
-    #: .. versionadded:: 0.6.2
-    - six
-    #: .. versionadded:: 0.9
-    - clang-libcxx
+    - clang
+    - libclang
+    - python-clang
+    - path-helpers
 
 test:
   imports:
-    - clang_helpers
-    - clang_helpers.clang_ast
-    - clang_helpers.data_frame
+    - {{ MODULE_NAME }}
+    - {{ MODULE_NAME }}.clang_ast
+    - {{ MODULE_NAME }}.data_frame
 
 about:
-  home: http://github.com/wheeler-microfluidics/clang-helpers
-  license: MIT
+  home: https://github.com/sci-bots/clang-helpers
+  license: GPL
+  summary: High-level API using `clang` module to provide static C++ class introspection.
+
+# source will be downloaded prior to filling in jinja templates
+# Example assumes that this folder has setup.py in it
+source:
+#  git_url: ../
+  path: ..
