@@ -18,7 +18,7 @@ build:
 
 requirements:
   build:
-    - python >=3.8
+    - python >=3.6
     - numpy
     - pandas
     - pydash
@@ -29,7 +29,7 @@ requirements:
 
 
   run:
-    - python >=3.8
+    - python >=3.6
     - numpy
     - pandas
     - pydash
